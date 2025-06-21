@@ -1,16 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from "typeorm";
+import { Murmur } from "./murmur.entity";
 
-@Entity()
+
+@Entity("users")
 export class User {
-  @PrimaryGeneratedColumn()
-  id!: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column()
-  name!: string;
+    @Column()
+    username: string;
 
-  @Column()
-  email!: string;
+    @Column({ unique: true })
+    email: string;
 
-  @Column({ default: true })
-  isActive!: boolean;
+    @Column()
+    password: string;
+
+    @CreateDateColumn()
+    created_at: Date;
+
+    @OneToMany(() => Murmur, (murmur) => murmur.user)
+    murmurs: Murmur[];
 }
