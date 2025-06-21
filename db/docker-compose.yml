@@ -1,21 +1,34 @@
 services:
-  test:
-    image: mysql:8.0
-    build: ./docker
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test
-      MYSQL_USER: docker
-      MYSQL_PASSWORD: docker
-      TZ: Asia/Tokyo
-    restart: always
-    volumes:
-      - ./init_db:/docker-entrypoint-initdb.d
-      - ./conf/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./data:/var/lib/mysql
-    ports:
-      - 3306:3306
-    security_opt:
-      - seccomp:unconfined
+    test:
+        image: mysql:8.0
+        build: ./docker
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test
+            MYSQL_USER: docker
+            MYSQL_PASSWORD: docker
+            TZ: Asia/Tokyo
+        restart: always
+        volumes:
+            - ./init_db:/docker-entrypoint-initdb.d
+            - ./conf/my.cnf:/etc/mysql/conf.d/my.cnf
+            - ./data:/var/lib/mysql
+        ports:
+            - 3306:3306
+        security_opt:
+            - seccomp:unconfined
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        depends_on:
+            - test
+        restart: always
+        environment:
+            PMA_HOST: test
+            PMA_USER: docker
+            PMA_PASSWORD: docker
+        ports:
+            - 8080:80
+
 volumes:
-  data:
+    data:
