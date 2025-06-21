@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { User } from './entities/user.entity';
 import { Murmur } from './entities/murmur.entity';
 import { MurmursModule } from './murmur/murmur.module';
+import { FollowModule } from './follow/follow.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { MurmursModule } from './murmur/murmur.module';
       synchronize: true,
     }),
     TypeOrmModule.forFeature([User, Murmur]),
-    MurmursModule
+    MurmursModule,
+    FollowModule
   ],
   controllers: [AppController],
   providers: [],
