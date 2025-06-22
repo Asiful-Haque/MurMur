@@ -63,4 +63,17 @@ export class MurmursController {
     async getUserMurmurs(@Param("id") id: number) {
         return await this.murmursService.getMurmursByUser(id);
     }
+
+    @Get("/userprofile/:id")
+    async getUserById(@Param("id") id: number) {
+        try {
+            const user = await this.murmursService.findById(id);
+            if (!user) {
+                throw new HttpException("User not found", HttpStatus.NOT_FOUND);
+            }
+            return user;
+        } catch (error: any) {
+            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

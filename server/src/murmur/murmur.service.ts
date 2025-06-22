@@ -83,4 +83,10 @@ export class MurmursService {
         const result = await this.dataSource.query(sql, [userId]);
         return result;
     }
+
+    async findById(id: number) {
+        const sql = `SELECT id, username, email, created_at FROM users WHERE id = ?`;
+        const result = await this.dataSource.query(sql, [id]);
+        return result[0]; // returns one user object or undefined
+    }
 }
