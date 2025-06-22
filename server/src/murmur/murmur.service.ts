@@ -5,7 +5,8 @@ import { DataSource } from 'typeorm';
 export class MurmursService {
     constructor(private dataSource: DataSource) {}
 
-    async createMurmur(userId: number, content: string) { //creating a murmur
+    async createMurmur(userId: number, content: string) {
+        //creating a murmur
         try {
             const sql = "INSERT INTO murmurs (user_id, content, created_at) VALUES (?, ?, NOW())";
             await this.dataSource.query(sql, [userId, content]);
@@ -15,7 +16,8 @@ export class MurmursService {
         }
     }
 
-    async deleteMurmur(userId: number, murmurId: number) { //Deleting the murmur only by the creator
+    async deleteMurmur(userId: number, murmurId: number) {
+        //Deleting the murmur only by the creator
         try {
             const checkSql = "SELECT user_id FROM murmurs WHERE id = ?";
             const result = await this.dataSource.query(checkSql, [murmurId]);
@@ -38,7 +40,8 @@ export class MurmursService {
 
     async likeMurmur(userId: number, murmurId: number) {
         try {
-            const existing = await this.dataSource.query( //It will check already liked entry
+            const existing = await this.dataSource.query(
+                //It will check already liked entry
                 "SELECT id FROM likes WHERE user_id = ? AND murmur_id = ?",
                 [userId, murmurId]
             );
@@ -58,7 +61,8 @@ export class MurmursService {
         }
     }
 
-    async getLikesForMurmur(murmurId: number) { //just for showing in the timeline with total likes
+    async getLikesForMurmur(murmurId: number) {
+        //just for showing in the timeline with total likes
         try {
             const result = await this.dataSource.query(
                 "SELECT user_id FROM likes WHERE murmur_id = ?",
@@ -72,5 +76,11 @@ export class MurmursService {
         } catch (error: any) {
             throw new Error(`Failed to fetch likes: ${error.message}`);
         }
+    }
+
+    async getMurmursByUser(userId: number) {
+        const sql = `SELECT * FROM murmurs WHERE user_id = ? ORDER BY created_at DESC`;
+        const result = await this.dataSource.query(sql, [userId]);
+        return result;
     }
 }

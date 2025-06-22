@@ -58,4 +58,9 @@ export class MurmursController {
         const result = await this.murmursService.getLikesForMurmur(murmurId);
         return { result };
     }
+
+    @Get("/usersmurmurs/:id")
+    async getUserMurmurs(@Param("id") id: number) {
+        return await this.murmursService.getMurmursByUser(id);
+    }
 }
