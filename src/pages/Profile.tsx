@@ -6,13 +6,15 @@ import { useParams } from 'react-router-dom'
 
 export default function Profile() {
   const { userId } = useParams<{ userId: string }>()
-  const currentUserId = 1 // Replace with actual logged-in user ID
+  const currentUserId = 1 // As no login done..so , logged in user is 1 (assumed)
+
   const [user, setUser] = useState({
-    name: '',
+    email: '',
     username: '',
-    bio: '',
     id: 0,
   })
+  const bio = 'Making the world amazing with being polite';
+
   const [followers, setFollowers] = useState(0)
   const [following, setFollowing] = useState(0)
   const [murmurs, setMurmurs] = useState<any[]>([])
@@ -23,13 +25,14 @@ export default function Profile() {
 
     const fetchProfileData = async () => {
       try {
-        const userData = {
-          id: parseInt(userId),
-          name: 'Demo User',
-          username: 'demo_user',
-          bio: 'Just a passionate developer sharing random thoughts in the digital void.',
-        }
+        // ✅ Fetch user data from your API
+        const userRes = await fetch(
+          `http://localhost:3001/api/me/murmurs/userprofile/${userId}`,
+        )
+        const userData = await userRes.json()
+        console.log("Dat", userData);
 
+        // ✅ Fetch follower, following and murmurs
         const [followedRes, followingRes, murmursRes] = await Promise.all([
           fetch(`http://localhost:3001/api/follow/count/followed/${userId}`),
           fetch(`http://localhost:3001/api/follow/count/following/${userId}`),
@@ -89,7 +92,7 @@ export default function Profile() {
 
       setIsFollowing(!isFollowing)
 
-      // Refresh follower count from backend
+      // Refresh follower count
       const followedRes = await fetch(
         `http://localhost:3001/api/follow/count/followed/${user.id}`,
       )
@@ -107,9 +110,9 @@ export default function Profile() {
       <div className="profile-wrapper">
         <div className="profile-card">
           <div className="profile-info">
-            <h1 className="profile-name">{user.name}</h1>
-            <p className="profile-username">@{user.username}</p>
-            <p className="profile-bio">{user.bio}</p>
+            <h1 className="profile-name">@{user.username}</h1>
+            <p className="profile-username">{user.email}</p>
+            <p className="profile-bio">{bio}</p>
             <div className="profile-stats-with-button">
               <div className="profile-stats">
                 <span>
@@ -131,7 +134,7 @@ export default function Profile() {
           </div>
         </div>
 
-        <h2 className="profile-murmur-title">Murmurs by {user.name}</h2>
+        <h2 className="profile-murmur-title">Murmurs by {user.username}</h2>
 
         <div className="profile-murmurs">
           {murmurs.map((murmur: any, index: number) => (
@@ -144,7 +147,7 @@ export default function Profile() {
                 id: murmur.id,
                 content: murmur.content,
                 createdAt: murmur.created_at,
-                user: { id: user.id, name: user.name },
+                user: { id: user.id, name: user.username },
               }}
             />
           ))}

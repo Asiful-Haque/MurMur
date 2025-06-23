@@ -12,14 +12,14 @@
 
 /* Card Box */
 .murmur-card {
-  background-color: #ffffff;
+  background-color: #cef0be;
   border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
-  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  padding: 16px 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease;
   width: 60%;
-  margin: 1rem auto;
+  margin: 16px auto;
 }
 
 .murmur-card:hover {
@@ -30,7 +30,7 @@
 .murmur-header {
   display: flex;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 12px;
 }
 
 /* Avatar */
@@ -39,7 +39,7 @@
   height: 40px;
   border-radius: 9999px;
   border: 2px solid #2563eb;
-  margin-right: 0.75rem;
+  margin-right: 12px;
 }
 
 /* User Info Block */
@@ -51,24 +51,24 @@
 .murmur-username {
   font-weight: 600;
   color: #1f2937;
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .murmur-date {
   margin-top: 5px;
-  font-size: 0.85rem;
+  font-size: 13.6px;
   color: #9ca3af;
   font-style: italic;
 }
 
 /* Content */
 .murmur-content {
-  font-size: 1rem;
+  font-size: 16px;
   color: #374151;
   line-height: 1.6;
   white-space: pre-wrap;
-  margin-top: 0.25rem;
-  margin-bottom: 0.75rem;
+  margin-top: 4px;
+  margin-bottom: 12px;
 }
 
 /* Footer: Action Bar */
@@ -76,7 +76,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 0.25rem;
+  padding-top: 4px;
   border-top: 1px solid #e5e7eb;
 }
 
@@ -85,12 +85,12 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 16px;
   color: #9ca3af;
   transition: color 0.2s ease, transform 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 4px;
 }
 
 .like-button:hover {
@@ -102,14 +102,13 @@
   color: #dc2626;
 }
 
-
 .delete-button {
   background: transparent;
   border: 1px solid #ef4444;
   color: #ef4444;
-  padding: 0.4rem 0.8rem;
+  padding: 6.4px 12.8px;
   border-radius: 6px;
-  font-size: 0.9rem;
+  font-size: 14.4px;
   cursor: pointer;
   transition: 0.2s;
 }

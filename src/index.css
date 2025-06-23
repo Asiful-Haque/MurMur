@@ -20,6 +20,15 @@ body {
 
   }
 
+  body {
+  background-color: #000000;
+  background-image:
+    linear-gradient(#3d3939 1px, transparent 1px),
+    linear-gradient(90deg, #3d3939 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+
   code {
     font-family:
       source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
