@@ -10,8 +10,9 @@ export class TimelineController {
     async getTimeline(@Query("page") page = "1", @Query("limit") limit = "10") {
         const pageNum = parseInt(page);
         const limitNum = parseInt(limit);
+        const currentUserId = 1;
 
-        const result = await this.timelineService.getMurmurs(pageNum, limitNum);
+        const result = await this.timelineService.getMurmurs(currentUserId, pageNum, limitNum);
         return result;
     }
 }
