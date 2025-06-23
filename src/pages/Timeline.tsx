@@ -4,25 +4,24 @@ import '../styles/Timeline.css'
 import MurmurCard from '../components/Murmurcard'
 
 const Timeline = () => {
-  const currentUserId = 1 // Replace this with your actual user ID from auth/session
+  const currentUserId = 1 // as not logged in
 
   const [data, setData] = useState<{
     page: number
     hasMore: boolean
     murmurs: any[]
+    total: number
   } | null>(null)
   const [loading, setLoading] = useState(true)
-  const [loadingMore, setLoadingMore] = useState(false)
   const [newMurmur, setNewMurmur] = useState('')
   const [posting, setPosting] = useState(false)
   const [postError, setPostError] = useState<string | null>(null)
 
-  const limit = 6 // items per page
+  const limit = 10
 
-  const loadTimeline = async (page = 1, append = false) => {
+  const loadTimeline = async (page = 1) => {
     try {
-      if (page === 1) setLoading(true)
-      else setLoadingMore(true)
+      setLoading(true)
 
       const res = await fetch(
         `http://localhost:3001/api/timeline?page=${page}&limit=${limit}`,
@@ -42,25 +41,18 @@ const Timeline = () => {
       }))
 
       const hasMore = page * limit < result.total
+      const totalPages = Math.ceil(result.total / limit)
 
-      if (append && data) {
-        setData({
-          page,
-          hasMore,
-          murmurs: [...data.murmurs, ...mappedMurmurs],
-        })
-      } else {
-        setData({
-          page,
-          hasMore,
-          murmurs: mappedMurmurs,
-        })
-      }
+      setData({
+        page,
+        hasMore,
+        murmurs: mappedMurmurs,
+        total: totalPages,
+      })
     } catch (error) {
       console.error('Failed to load timeline:', error)
     } finally {
       setLoading(false)
-      setLoadingMore(false)
     }
   }
 
@@ -68,13 +60,6 @@ const Timeline = () => {
     loadTimeline(1)
   }, [])
 
-  const handleLoadMore = () => {
-    if (data?.hasMore) {
-      loadTimeline(data.page + 1, true)
-    }
-  }
-
-  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!newMurmur.trim()) return
@@ -92,12 +77,10 @@ const Timeline = () => {
         }),
       })
 
-      if (!res.ok) {
-        throw new Error('Failed to post murmur')
-      }
+      if (!res.ok) throw new Error('Failed to post murmur')
 
       setNewMurmur('')
-      await loadTimeline(1)
+      loadTimeline(1)
     } catch (error: any) {
       setPostError(error.message || 'Error posting murmur')
     } finally {
@@ -105,7 +88,61 @@ const Timeline = () => {
     }
   }
 
-  if (loading) {
+  const handlePageChange = (newPage: number) => {
+    if (
+      data &&
+      newPage !== data.page &&
+      newPage >= 1 &&
+      newPage <= data.total
+    ) {
+      loadTimeline(newPage)
+    }
+  }
+
+  const renderPagination = () => {
+    if (!data || data.total <= 1) return null
+
+    const pagesToShow = 5
+    const start = Math.max(1, data.page - Math.floor(pagesToShow / 2))
+    const end = Math.min(start + pagesToShow - 1, data.total)
+
+    const pageNumbers: number[] = []
+    for (let i = start; i <= end; i++) {
+      pageNumbers.push(i)
+    }
+
+    return (
+      <div className="pagination">
+        <button
+          onClick={() => handlePageChange(data.page - 1)}
+          disabled={data.page === 1}
+          className="pagination-button"
+        >
+          Prev
+        </button>
+
+        {pageNumbers.map((num) => (
+          <button
+            key={num}
+            onClick={() => handlePageChange(num)}
+            className={`pagination-number ${num === data.page ? 'active' : ''}`}
+          >
+            {num}
+          </button>
+        ))}
+
+        <button
+          onClick={() => handlePageChange(data.page + 1)}
+          disabled={data.page === data.total}
+          className="pagination-button"
+        >
+          Next
+        </button>
+      </div>
+    )
+  }
+
+  if (loading && !data) {
     return (
       <div className="loading-wrapper">
         <div className="loading-center">
@@ -158,23 +195,7 @@ const Timeline = () => {
           ))}
         </div>
 
-        {data?.hasMore && (
-          <div className="load-more-wrapper">
-            <button
-              onClick={handleLoadMore}
-              disabled={loadingMore}
-              className="load-more-button"
-            >
-              {loadingMore ? 'Loading...' : 'Load More'}
-            </button>
-          </div>
-        )}
-
-        {data && !data.hasMore && data.murmurs.length > 0 && (
-          <div className="end-message">
-            <p>You've caught up with all murmurs!</p>
-          </div>
-        )}
+        {renderPagination()}
       </div>
 
       <footer className="site-footer">
