@@ -1,0 +1,113 @@
+body {
+  margin: 0;
+  background: #000000;
+  font-family: 'Inter', sans-serif;
+}
+
+.profile-page {
+  width: 100%;
+}
+
+.profile-banner {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #523e27, #615d17);
+}
+
+.profile-wrapper {
+  max-width: 1000px;
+  margin: -80px auto 0;
+  padding: 0 16px;
+}
+
+.profile-card {
+  background: rgb(115, 172, 164);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  margin-bottom: 32px;
+}
+
+.profile-info {
+  text-align: center;
+}
+
+.profile-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4.8px;
+}
+
+.profile-username {
+  color: #6b7280;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.profile-bio {
+  font-size: 16px;
+  color: #374151;
+  margin-bottom: 24px;
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  color: #4b5563;
+  font-size: 16px;
+  margin: 0 auto;
+}
+
+.profile-stats span {
+  font-weight: 500;
+}
+
+.profile-murmur-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 16px;
+  padding-left: 4px;
+  text-align: center;
+}
+
+.profile-murmurs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.follow-button {
+  padding: 9.6px 22.4px;
+  font-size: 15.2px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: none;
+  margin-left: 16px;
+}
+
+.follow-button.follow {
+  background-color: #3b82f6; /* Blue */
+  color: white;
+}
+
+.follow-button.unfollow {
+  background-color: #ef4444; /* Red */
+  color: white;
+}
+
+.follow-button:hover {
+  opacity: 0.9;
+}
+
+.profile-stats-with-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}

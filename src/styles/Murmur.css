@@ -1,0 +1,119 @@
+/* Card Container */
+.murmur-link-wrapper {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.1s ease;
+}
+
+.murmur-link-wrapper:hover {
+  transform: scale(1.01);
+}
+
+/* Card Box */
+.murmur-card {
+  background-color: #cef0be;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+  width: 60%;
+  margin: 16px auto;
+}
+
+.murmur-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Header: Avatar + User Info */
+.murmur-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* Avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  border: 2px solid #2563eb;
+  margin-right: 12px;
+}
+
+/* User Info Block */
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.murmur-username {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 16px;
+}
+
+.murmur-date {
+  margin-top: 5px;
+  font-size: 13.6px;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* Content */
+.murmur-content {
+  font-size: 16px;
+  color: #374151;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+/* Footer: Action Bar */
+.murmur-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 4px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Like Button */
+.like-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #9ca3af;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.like-button:hover {
+  color: #ef4444;
+  transform: scale(1.05);
+}
+
+.like-button.liked {
+  color: #dc2626;
+}
+
+.delete-button {
+  background: transparent;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 6.4px 12.8px;
+  border-radius: 6px;
+  font-size: 14.4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #ef4444;
+  color: white;
+}
